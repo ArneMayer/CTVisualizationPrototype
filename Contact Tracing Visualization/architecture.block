@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fmc:FMCModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fmc="http://fmc.eclipse.org/0.10.0">
+  <nodes xsi:type="fmc:Agent" name="  SAP HANA" targetChannels="//@connections.1">
+    <contains xsi:type="fmc:Agent" name="Data Aggregation" accessConnections="//@connections.0"/>
+  </nodes>
+  <nodes xsi:type="fmc:Storage" name="In-Memory&#xD;&#xA;Database" connections="//@connections.0"/>
+  <nodes xsi:type="fmc:Agent" name="  Contact Tracing Data Visualization Prototype" sourceChannels="//@connections.1">
+    <contains xsi:type="fmc:Storage" name="Graph Structure" connections="//@connections.3"/>
+    <contains xsi:type="fmc:Agent" name="Layouting" accessConnections="//@connections.4" targetChannels="//@connections.6"/>
+    <contains xsi:type="fmc:Agent" name="GUI" sourceChannels="//@connections.6" targetChannels="//@connections.7"/>
+    <contains xsi:type="fmc:Storage" name="Result Set" connections="//@connections.2"/>
+    <contains xsi:type="fmc:Agent" name="Visualization" accessConnections="//@connections.5" sourceChannels="//@connections.7"/>
+    <contains xsi:type="fmc:Agent" name="Result Set Processing" accessConnections="//@connections.2 //@connections.3"/>
+    <contains xsi:type="fmc:Storage" name="Layout" connections="//@connections.4 //@connections.5"/>
+  </nodes>
+  <connections xsi:type="fmc:Access" agent="//@nodes.0/@contains.0" type="READ" target="//@nodes.1"/>
+  <connections xsi:type="fmc:Channel" channelType="REQUEST" source="//@nodes.2" target="//@nodes.0" name="query over JDBC"/>
+  <connections xsi:type="fmc:Access" agent="//@nodes.2/@contains.5" type="READ" target="//@nodes.2/@contains.3"/>
+  <connections xsi:type="fmc:Access" agent="//@nodes.2/@contains.5" type="WRITE" target="//@nodes.2/@contains.0"/>
+  <connections xsi:type="fmc:Access" agent="//@nodes.2/@contains.1" type="WRITE" target="//@nodes.2/@contains.6"/>
+  <connections xsi:type="fmc:Access" agent="//@nodes.2/@contains.4" type="READ" target="//@nodes.2/@contains.6"/>
+  <connections xsi:type="fmc:Channel" source="//@nodes.2/@contains.2" target="//@nodes.2/@contains.1" dataflowDirection="DEFAULT" name="set layout"/>
+  <connections xsi:type="fmc:Channel" source="//@nodes.2/@contains.4" target="//@nodes.2/@contains.2" name="displaying and modifying"/>
+</fmc:FMCModel>
