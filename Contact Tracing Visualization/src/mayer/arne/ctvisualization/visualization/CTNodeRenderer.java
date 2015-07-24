@@ -44,10 +44,10 @@ class CTNodeRenderer implements Renderer.Vertex<CTNode, CTEdge>
     	graphicsContext.setColor(Color.WHITE);
     	graphicsContext.fillOval((int)x, (int)y, (int)w, (int)h);
     	
-    	// Cases are painted completely in red
-    	if(node.isCase())
+    	// Cases and people with completed tracing are painted as a filled circle
+    	if(node.isCase() || node.getTraceStatus() >= 0.99)
     	{
-    		graphicsContext.setColor(Color.RED);
+    		graphicsContext.setColor(this.getColorForNode(node));
         	graphicsContext.fillOval((int)x, (int)y, (int)w, (int)h);
     	}
     	// People with at least one visit are painted with the pie
@@ -60,12 +60,6 @@ class CTNodeRenderer implements Renderer.Vertex<CTNode, CTEdge>
     		// Black border
     		graphicsContext.setColor(Color.BLACK);
         	graphicsContext.draw(innerShape);
-    	}
-    	// People with completed tracing can be drawn as filled circles without pie shape
-    	else if(node.getTraceStatus() >= 0.99)
-    	{
-    		graphicsContext.setColor(this.getColorForNode(node));
-        	graphicsContext.fillOval((int)x, (int)y, (int)w, (int)h);
     	}
     	
     	// Outer shape (circle) border
